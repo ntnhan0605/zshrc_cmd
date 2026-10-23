@@ -173,5 +173,12 @@ if [ -f "$DOTFILES_DIR/tailscale/NOTES.md" ]; then
   cat "$DOTFILES_DIR/tailscale/NOTES.md"
 fi
 
+if [ -d "$DOTFILES_DIR/fonts" ] && [ -n "$(ls -A "$DOTFILES_DIR/fonts" 2>/dev/null)" ]; then
+  echo "== Fonts =="
+  mkdir -p "$HOME/Library/Fonts"
+  rsync -a "$DOTFILES_DIR/fonts/" "$HOME/Library/Fonts/"
+  echo "installed $(find "$DOTFILES_DIR/fonts" -type f | wc -l | tr -d ' ') font files to ~/Library/Fonts"
+fi
+
 echo
 echo "Done. Open a new terminal (or 'exec zsh') to pick up the new shell config."

@@ -11,7 +11,7 @@ set -euo pipefail
 DOTFILES="$HOME/dotfiles"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-mkdir -p "$DOTFILES"/{zsh,ssh,claude,nvm,brew,git,vscode/snippets,npm,iterm2,tailscale,dotfiles-sync}
+mkdir -p "$DOTFILES"/{zsh,ssh,claude,nvm,brew,git,vscode/snippets,npm,iterm2,tailscale,fonts,dotfiles-sync}
 echo ".DS_Store" > "$DOTFILES/.gitignore"
 
 echo "== zsh =="
@@ -141,6 +141,12 @@ sudo tailscale up
 
 and authenticate with your Tailscale account when prompted.
 EOF
+fi
+
+echo "== Fonts =="
+if [ -d "$HOME/Library/Fonts" ] && [ -n "$(ls -A "$HOME/Library/Fonts" 2>/dev/null)" ]; then
+  rsync -a "$HOME/Library/Fonts/" "$DOTFILES/fonts/"
+  echo "copied $(find "$DOTFILES/fonts" -type f | wc -l | tr -d ' ') font files (user fonts only, not system fonts)"
 fi
 
 echo "== dotfiles-sync tooling (so the archive is self-contained) =="
