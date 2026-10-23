@@ -14,11 +14,15 @@ scripts themselves) at
 so either script can be fetched and run with one line, without cloning
 anything first:
 
-```sh
-# old machine, if you don't already have ~/dotfiles/dotfiles-sync/pack.sh
-bash <(curl -fsSL https://raw.githubusercontent.com/ntnhan0605/zshrc_cmd/main/dotfiles-sync/pack.sh)
+Old machine, if you don't already have `~/dotfiles/dotfiles-sync/pack.sh`:
 
-# new machine, before ~/dotfiles even exists on it
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/ntnhan0605/zshrc_cmd/main/dotfiles-sync/pack.sh)
+```
+
+New machine, before `~/dotfiles` even exists on it:
+
+```sh
 bash <(curl -fsSL https://raw.githubusercontent.com/ntnhan0605/zshrc_cmd/main/dotfiles-sync/unpack.sh)
 ```
 
