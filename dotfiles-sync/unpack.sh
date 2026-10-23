@@ -52,14 +52,17 @@ fix_homebrew() {
   brew reinstall llhttp node 2>/dev/null || true
   # Fixes "npm error EEXIST .../pnpx" blocking corepack's reinstall
   rm -f "$brew_prefix/bin/pnpx" 2>/dev/null || true
-  # Drop taps/casks that are permanently gone upstream (not fixable, just noise)
+  # Drop formulae/taps/casks that are permanently gone or conflict upstream (not fixable, just noise)
   local brewfile="$HOME/dotfiles/brew/Brewfile"
   if [ -f "$brewfile" ]; then
     sed -i '' \
       -e '/^tap "homebrew\/services"$/d' \
       -e '/^tap "th-ch\/youtube-music"$/d' \
       -e '/^cask "youtube-music"$/d' \
+      -e '/^brew "corepack"$/d' \
       "$brewfile" 2>/dev/null || true
+    # Node >=16.9 ships corepack built in; the standalone formula fights it over
+    # the same pnpm/pnpx/yarn shims, hence the recurring EEXIST. Use the bundled one.
   fi
 }
 
