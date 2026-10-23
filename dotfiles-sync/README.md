@@ -11,14 +11,22 @@ Both scripts are self-contained — no shared config, no dependency on where
 they live on disk. They're also mirrored standalone (no secrets in the
 scripts themselves) at
 [`ntnhan0605/zshrc_cmd/dotfiles-sync`](https://github.com/ntnhan0605/zshrc_cmd/tree/main/dotfiles-sync),
-so a brand-new Mac can fetch `unpack.sh` before `~/dotfiles` even exists on it:
+so either script can be fetched and run with one line, without cloning
+anything first:
 
 ```sh
+# old machine, if you don't already have ~/dotfiles/dotfiles-sync/pack.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/ntnhan0605/zshrc_cmd/main/dotfiles-sync/pack.sh)
+
+# new machine, before ~/dotfiles even exists on it
 bash <(curl -fsSL https://raw.githubusercontent.com/ntnhan0605/zshrc_cmd/main/dotfiles-sync/unpack.sh)
 ```
 
-(`bash <(curl ...)` rather than `curl ... | bash`, so the script's passphrase
-and confirm prompts still read from your terminal instead of the pipe.)
+(`bash <(curl ...)` rather than `curl ... | bash`, so the scripts' passphrase
+and confirm prompts still read from your terminal instead of the pipe.) Note
+`pack.sh` always reads from `~/dotfiles` on whatever machine it runs on, so
+the curl form only makes sense on a machine that already has its own
+`~/dotfiles` to pack.
 
 ## Usage
 
