@@ -5,7 +5,7 @@ Two scripts for moving `~/dotfiles` to another Mac via AirDrop, no git involved.
 | Script | Run where | Does |
 |---|---|---|
 | `pack.sh` | old machine | Tars `~/dotfiles`, encrypts it (AES-256, passphrase typed interactively), drops a `dotfiles-<host>-<timestamp>.tar.gz.enc` on the Desktop, opens Finder on it so you can AirDrop it. |
-| `unpack.sh` | new machine | Finds that `.tar.gz.enc` in `~/Downloads`/`~/Desktop` (or takes a path as `$1`), decrypts it with the passphrase you re-enter, extracts to `~/dotfiles` (backing up any existing one first), then offers to run `~/dotfiles/install.sh`. |
+| `unpack.sh` | new machine | Finds that `.tar.gz.enc` in `~/Downloads`/`~/Desktop` (or takes a path as `$1`), decrypts it with the passphrase you re-enter, extracts to `~/dotfiles` (backing up any existing one first), then offers to run `~/dotfiles/install.sh` — and if you say yes, first fixes the two most common Homebrew failures on a fresh Mac (stale `/opt/homebrew` download locks causing `Permission denied`, and a `node`/`llhttp` dyld version mismatch) before handing off to `install.sh`. |
 
 Both scripts are self-contained — no shared config, no dependency on where
 they live on disk. They're also mirrored standalone (no secrets in the

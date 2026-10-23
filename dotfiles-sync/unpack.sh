@@ -41,8 +41,22 @@ fi
 tar xzf "$TMP_TAR" -C "$HOME"
 echo "extracted to ~/dotfiles"
 
+fix_homebrew() {
+  command -v brew >/dev/null 2>&1 || return 0
+  echo "Pre-flight: fixing common Homebrew permission/dyld issues..."
+  local brew_prefix
+  brew_prefix="$(brew --prefix)"
+  sudo rm -f "$brew_prefix"/var/homebrew/locks/*.lock 2>/dev/null || true
+  sudo chown -R "$(whoami)":admin "$brew_prefix" 2>/dev/null || true
+  # Fixes "Library not loaded: .../libllhttp.*.dylib" from node/llhttp version drift
+  brew reinstall llhttp node 2>/dev/null || true
+}
+
 read -r -p "Run ~/dotfiles/install.sh now? [y/N] " yn || yn="n"
 case "$yn" in
-  [Yy]*) exec "$HOME/dotfiles/install.sh" ;;
+  [Yy]*)
+    fix_homebrew
+    exec "$HOME/dotfiles/install.sh"
+    ;;
   *) echo "Skipped. Run ~/dotfiles/install.sh manually when ready." ;;
 esac
