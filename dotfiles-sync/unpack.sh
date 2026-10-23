@@ -50,6 +50,17 @@ fix_homebrew() {
   sudo chown -R "$(whoami)":admin "$brew_prefix" 2>/dev/null || true
   # Fixes "Library not loaded: .../libllhttp.*.dylib" from node/llhttp version drift
   brew reinstall llhttp node 2>/dev/null || true
+  # Fixes "npm error EEXIST .../pnpx" blocking corepack's reinstall
+  rm -f "$brew_prefix/bin/pnpx" 2>/dev/null || true
+  # Drop taps/casks that are permanently gone upstream (not fixable, just noise)
+  local brewfile="$HOME/dotfiles/brew/Brewfile"
+  if [ -f "$brewfile" ]; then
+    sed -i '' \
+      -e '/^tap "homebrew\/services"$/d' \
+      -e '/^tap "th-ch\/youtube-music"$/d' \
+      -e '/^cask "youtube-music"$/d' \
+      "$brewfile" 2>/dev/null || true
+  fi
 }
 
 read -r -p "Run ~/dotfiles/install.sh now? [y/N] " yn || yn="n"
