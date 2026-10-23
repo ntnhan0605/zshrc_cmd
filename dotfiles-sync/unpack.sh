@@ -67,6 +67,7 @@ read -r -p "Run ~/dotfiles/install.sh now? [y/N] " yn || yn="n"
 case "$yn" in
   [Yy]*)
     fix_homebrew
+    chmod +x "$HOME/dotfiles/install.sh"
     exec "$HOME/dotfiles/install.sh"
     ;;
   *) echo "Skipped. Run ~/dotfiles/install.sh manually when ready." ;;
