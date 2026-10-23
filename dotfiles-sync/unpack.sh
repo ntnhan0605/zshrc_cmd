@@ -41,7 +41,7 @@ fi
 tar xzf "$TMP_TAR" -C "$HOME"
 echo "extracted to ~/dotfiles"
 
-read -r -p "Run ~/dotfiles/install.sh now? [y/N] " yn
+read -r -p "Run ~/dotfiles/install.sh now? [y/N] " yn || yn="n"
 case "$yn" in
   [Yy]*) exec "$HOME/dotfiles/install.sh" ;;
   *) echo "Skipped. Run ~/dotfiles/install.sh manually when ready." ;;
